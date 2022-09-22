@@ -119,6 +119,7 @@ namespace AnimalShelter
             arrayList.Add(new Customer("First", "Last", new DateTime(2000, 2, 2)));
 
             arrayList.Insert(2, 2);
+
             arrayList.Remove(2);
             arrayList.RemoveAt(1);
 
@@ -129,11 +130,23 @@ namespace AnimalShelter
                 sum += num;
             }
 
-            int[] intArray = new int[5];
-            ArrayList arrayList = new ArrayList();
             List<int> intList = new List<int>();
+            intList.Add(1);
+            intList.Add(2);
 
+            int sum2 = 0;
+            for (int index = 0; index < intList.Count; index++)
+            {
+                int value = intList[index];
+                sum2 += value;
+            }
 
+            foreach (int value in intList)
+            {
+                sum += value;
+            }
+
+            
         }
     }
 }
