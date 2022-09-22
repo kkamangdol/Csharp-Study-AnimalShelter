@@ -8,7 +8,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace AnimalShelter
 {
-    internal class Customer
+    public class Customer
     {
         public string FirstName;
         public string LastName;
