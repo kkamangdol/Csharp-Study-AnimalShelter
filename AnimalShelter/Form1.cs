@@ -4,8 +4,10 @@ namespace AnimalShelter
 {
     public partial class Form1 : Form
     {
-        public Customer[] CustomerArray = new Customer[10];
-        public int CustomerArrayIndex = 0;
+        public List<Customer> Customers = new List<Customer>();
+
+ //     public Customer[] CustomerArray = new Customer[10];
+ //     public int CustomerArrayIndex = 0;
         public Form1()
         {
             InitializeComponent();
@@ -13,6 +15,13 @@ namespace AnimalShelter
 
         private void CreateCustomer_Click(object sender, EventArgs e)
         {
+            Customer cus = new Customer(CusNewFirstName.Text, CusNewLastName.Text, DateTime.Parse(CusNewBirthday.Text));
+            cus.Address = CusNewAddress.Text;
+            cus.Description = CusNewDescription.Text;
+
+            CustomerList.Items.Add(cus.FirstName);
+
+            Customers.Add(cus);
 
             /*
                         // for문
@@ -69,18 +78,18 @@ namespace AnimalShelter
             // DateTime birthday = new DateTime(2000, 1, 1);
 
             // Customer cus = new Customer("Ian", "Na", new DateTime(2000, 1, 1)); //위에서 만들어서 birthday 넣어도 가능
-            CustomerArray[CustomerArrayIndex] = new Customer(CusNewFirstName.Text, CusNewLastName.Text, DateTime.Parse(CusNewBirthday.Text));
+            // CustomerArray[CustomerArrayIndex] = new Customer(CusNewFirstName.Text, CusNewLastName.Text, DateTime.Parse(CusNewBirthday.Text));
             // cus.Address = "123 Wilshire Blvd";
 
-            CustomerArray[CustomerArrayIndex].Address = CusNewAddress.Text;
-            CustomerArray[CustomerArrayIndex].Description = CusNewDescription.Text;
+            // CustomerArray[CustomerArrayIndex].Address = CusNewAddress.Text;
+            // CustomerArray[CustomerArrayIndex].Description = CusNewDescription.Text;
 
-            CustomerList.Items.Add(CustomerArray[CustomerArrayIndex].FirstName);
+            // CustomerList.Items.Add(CustomerArray[CustomerArrayIndex].FirstName);
 
-            CustomerArrayIndex++;
+            // CustomerArrayIndex++;
             //bool test = cus.IsQualified;
 
-            //임의 날짜와 시간 생성
+            //임의 날짜와 시간  생성
             //DateTime date = new DateTime(2022, 9, 21);
 
             //현재 날짜와 시간 생성
@@ -99,20 +108,47 @@ namespace AnimalShelter
         private void CustomerList_Click(object sender, EventArgs e)
         {
             string firstname = CustomerList.SelectedItem.ToString();
-
-            for (int index = 0; index < CustomerArrayIndex; index++)
+            // foreach 문 (더 효율적이다)
+            foreach (Customer cus in Customers)
             {
-                if (CustomerArray[index].FirstName == firstname)
+                if (cus.FirstName == firstname)
                 {
-                    ShowDetails(CustomerArray[index]);
+                    ShowDetails(cus);
                     break;
                 }
             }
-        }
-
-
+            /*          for 문
+                        for (int index = 0; index < CustomerArrayIndex; index++)
+                        {
+                            if (CustomerArray[index].FirstName == firstname)
+                            {
+                                ShowDetails(CustomerArray[index]);
+                                break;
+                            }
+                        }
+                    }
+            */
+        }       
         private void button1_Click(object sender, EventArgs e)
         {
+            /*
+            // 입력
+            ArrayList arrayList = new ArrayLislt();
+            arrayList.Add(0);
+            arrayList.Add(1);
+            arrayList.Add(3);
+
+            arrayList.Insert(2, 2);       3번째줄 추가(기존꺼 뒤로밀림) 
+            arrayLIst.Remove(3); =        3을가진 값의 맨 처음껄 삭제
+            arrayList.RemoveAt(3); =      3+1번째 줄의 값 삭제
+
+            // 조회
+            arrayList[0];  // 0
+            arrayList[1];  // 1
+            arrayList[2];  // 2         +
+            arrayList[3];  // 3
+            */
+
             ArrayList arrayList = new ArrayList();
             arrayList.Add(0);
             arrayList.Add("Hi");
@@ -123,13 +159,14 @@ namespace AnimalShelter
             arrayList.Remove(2);
             arrayList.RemoveAt(1);
 
+
             int sum = 0;
             for (int index = 0; index < arrayList.Count; index++)
             {
                 int num = (int)arrayList[index];
                 sum += num;
             }
-
+            /*
             List<int> intList = new List<int>();
             intList.Add(1);
             intList.Add(2);
@@ -143,10 +180,12 @@ namespace AnimalShelter
 
             foreach (int value in intList)
             {
-                sum += value;
-            }
-
-            
+               sum += value;
+                
+            } 
+            */
+             
+                        
         }
     }
 }
