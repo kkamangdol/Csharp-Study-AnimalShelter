@@ -10,6 +10,7 @@ namespace AnimalShelter
 {
     public class Customer
     {
+     //private 여기서만 사용하기 public 다른대서도 사용가능 
         public string FirstName;
         public string LastName;
         private DateTime _Birthday;
@@ -17,7 +18,7 @@ namespace AnimalShelter
         private bool _IsQualified;
         public string Address;
         public string Description;
-
+        
         public Customer(string firstName, string lastName, DateTime birthday) //int age 제거
         {
             this.FirstName = firstName;
