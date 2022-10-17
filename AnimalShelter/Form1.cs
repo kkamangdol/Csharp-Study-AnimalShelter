@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Security.AccessControl;
 
 namespace AnimalShelter
 {
@@ -18,10 +19,17 @@ namespace AnimalShelter
             Customer cus = new Customer(CusNewFirstName.Text, CusNewLastName.Text, DateTime.Parse(CusNewBirthday.Text));
             cus.Address = CusNewAddress.Text;
             cus.Description = CusNewDescription.Text;
-
-            CustomerList.Items.Add(cus.FirstName);
+            
+            CusList.Rows.Add(cus.FirstName, cus.Age, cus.IsQualified);
+            // CusList.Items.Add(cus.FirstName);
 
             Customers.Add(cus);
+
+            CusNewFirstName.Text = "";
+            CusNewLastName.Text = "";
+            CusNewBirthday.Text = "";
+            CusNewAddress.Text = "";
+            CusNewDescription.Text = "";
 
             /*
                         // for문
@@ -105,9 +113,9 @@ namespace AnimalShelter
             CusIsQualified.Text = cus.IsQualified.ToString();
         }
 
-        private void CustomerList_Click(object sender, EventArgs e)
+/*      private void CustomerList_Click(object sender, EventArgs e)
         {
-            string firstname = CustomerList.SelectedItem.ToString();
+            string firstname = CusList.SelectedItem.ToString();
             // foreach 문 (더 효율적이다)
             foreach (Customer cus in Customers)
             {
@@ -117,7 +125,7 @@ namespace AnimalShelter
                     break;
                 }
             }
-            /*          for 문
+                      for 문
                         for (int index = 0; index < CustomerArrayIndex; index++)
                         {
                             if (CustomerArray[index].FirstName == firstname)
@@ -127,65 +135,119 @@ namespace AnimalShelter
                             }
                         }
                     }
-            */
-        }       
-        private void button1_Click(object sender, EventArgs e)
+            
+        }
+*/
+        private void CusList_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            /*
-            // 입력
-            ArrayList arrayList = new ArrayLislt();
-            arrayList.Add(0);
-            arrayList.Add(1);
-            arrayList.Add(3);
-
-            arrayList.Insert(2, 2);       3번째줄 추가(기존꺼 뒤로밀림) 
-            arrayLIst.Remove(3); =        3을가진 값의 맨 처음껄 삭제
-            arrayList.RemoveAt(3); =      3+1번째 줄의 값 삭제
-
-            // 조회
-            arrayList[0];  // 0
-            arrayList[1];  // 1
-            arrayList[2];  // 2         +
-            arrayList[3];  // 3
-            */
-
-            ArrayList arrayList = new ArrayList();
-            arrayList.Add(0);
-            arrayList.Add("Hi");
-            arrayList.Add(new Customer("First", "Last", new DateTime(2000, 2, 2)));
-
-            arrayList.Insert(2, 2);
-
-            arrayList.Remove(2);
-            arrayList.RemoveAt(1);
-
-
-            int sum = 0;
-            for (int index = 0; index < arrayList.Count; index++)
+            string firstname = (string)CusList.Rows[e.RowIndex].Cells[0].Value;
+            // foreach 문 (더 효율적이다)
+            foreach (Customer cus in Customers)
             {
-                int num = (int)arrayList[index];
-                sum += num;
-            }
-            /*
-            List<int> intList = new List<int>();
-            intList.Add(1);
-            intList.Add(2);
-
-            int sum2 = 0;
-            for (int index = 0; index < intList.Count; index++)
-            {
-                int value = intList[index];
-                sum2 += value;
+                if (cus.FirstName == firstname)
+                {
+                    ShowDetails(cus);
+                    break;
+                }
             }
 
-            foreach (int value in intList)
+            CusDetailPanel.Show();
+            CusNewPanel.Hide();
+
+        }
+        /*      private void button1_Click(object sender, EventArgs e)
+       {
+
+//          // 입력
+//          ArrayList arrayList = new ArrayLislt();
+//          arrayList.Add(0);
+//          arrayList.Add(1);
+//          arrayList.Add(3);
+//
+//          arrayList.Insert(2, 2);       3번째줄 추가(기존꺼 뒤로밀림) 
+//          arrayLIst.Remove(3); =        3을가진 값의 맨 처음껄 삭제
+//          arrayList.RemoveAt(3); =      3+1번째 줄의 값 삭제
+//
+//          // 조회
+//          arrayList[0];  // 0
+//          arrayList[1];  // 1
+//          arrayList[2];  // 2         +
+//          arrayList[3];  // 3
+
+
+           ArrayList arrayList = new ArrayList();
+           arrayList.Add(0);
+           arrayList.Add("Hi");
+           arrayList.Add(new Customer("First", "Last", new DateTime(2000, 2, 2)));
+
+           arrayList.Insert(2, 2);
+
+           arrayList.Remove(2);
+           arrayList.RemoveAt(1);
+
+
+           int sum = 0;
+           for (int index = 0; index < arrayList.Count; index++)
+           {
+               int num = (int)arrayList[index];
+               sum += num;
+           }
+
+//          List<int> intList = new List<int>();
+//          intList.Add(1);
+//          intList.Add(2);
+//
+//          int sum2 = 0;
+//          for (int index = 0; index < intList.Count; index++)
+//         {
+//              int value = intList[index];
+//              sum2 += value;
+//          }
+//
+//          foreach (int value in intList)
+//          {
+//             sum += value;
+//              
+//          } 
+//          
+
+
+       } */
+
+        private void From1_Load(Object sender, EventArgs e)
+        {
+            CusListPanel.Dock = DockStyle.Fill;
+            CusDetailPanel.Dock = DockStyle.Right;
+            CusNewPanel.Dock = DockStyle.Right;
+
+            Customer cus = new Customer("Ian", "Na", new DateTime(2000, 1, 2));
+            Cat cat = new Cat(1, "Lucas", "White", "Male");
+            cus.Adopt(cat);
+
+            Customers.Add(cus);
+            CusList.Rows.Add(cus.FirstName, cus.Age, cus.IsQualified);
+
+        }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            CusNewPanel.Show();
+            CusDetailPanel.Hide();
+
+            /*Customer[] cusArray = new Customer[10];
+            cusArray[0] = new Customer("First", "Last", new DateTime(2000, 2, 2));
+            foreach (Customer cus in cusArray)
             {
-               sum += value;
-                
-            } 
-            */
-             
-                        
+                string fullName = cus.FullName;
+            }
+
+            ArrayList cusArrayList = new ArrayList();
+            cusArrayList.Add(new Customer("First", "Last", new DateTime(2000, 2, 2)));
+
+            List<Customer> cusList = new List<Customer>();
+            cusList.Add(new Customer("First", "Last", new DateTime(2000, 2, 2)));*/
+
+
         }
     }
 }

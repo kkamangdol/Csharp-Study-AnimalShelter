@@ -18,6 +18,24 @@ namespace AnimalShelter
         private bool _IsQualified;
         public string Address;
         public string Description;
+
+        private Cat _MyCat;
+        public Cat MyCat
+        {
+            get { return _MyCat; }
+        }
+        public bool Adopt(Cat cat)
+        {
+            if (_IsQualified)
+            {
+                _MyCat = cat;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         
         public Customer(string firstName, string lastName, DateTime birthday) //int age 제거
         {
